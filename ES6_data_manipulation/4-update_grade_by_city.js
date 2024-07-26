@@ -3,13 +3,10 @@ export default function updateStudentGradeByCity(array, city, newGrades) {
     array.filter((item) => item.location === city).map((item) => {
       const updatedItem = item;
       for (const newGrade of newGrades) {
-        if (updatedItem.id === newGrade.id) {
-          if ('grade' in newGrade) {
-            updatedItem.grade = newGrade.grade;
-          }
-
-          updatedItem.grade = 'N/A';
+        if (updatedItem.id === newGrade.studentId) {
+          if (newGrade.hasOwnProperty("grade")) updatedItem.grade = newGrade.grade;
         }
+        else updatedItem.grade = 'N/A';
       }
       return updatedItem;
     })
