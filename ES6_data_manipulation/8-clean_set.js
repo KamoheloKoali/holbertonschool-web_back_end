@@ -1,13 +1,20 @@
 export default function cleanSet(set, startString) {
-  let newWord = '';
-  const toReplace = (word) => {
-    const index = word.search(startString[startString.length]);
-    return word.slice(0, index);
-  };
-  for (const word in set) {
-    if (word instanceof String) {
-      newWord = `${newWord}-${word.replace(toReplace(word), '')}`;
-    }
+  if (typeof startString !== 'string' || startString === '') {
+    return '';
   }
-  return newWord;
+
+  function findMatch(item) {
+    return item.startsWith(startString);
+  }
+
+  function sliceString(item) {
+    return item.slice(startString.length);
+  }
+
+  const myArray = Array.from(set);
+  const myString = myArray.filter(findMatch);
+  const slicedString = myString.map(sliceString);
+  const ret = slicedString.join('-');
+
+  return ret;
 }
