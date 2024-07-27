@@ -1,7 +1,5 @@
 export default function uploadPhoto(filename) {
-  const myPromise = new Promise((reject) => {
-    reject(Error(`${filename} cannot be processed`));
+  return new Promise((reject) => {
+    reject(new Error(`${filename} cannot be processed`));
   });
-
-  return myPromise;
 }
