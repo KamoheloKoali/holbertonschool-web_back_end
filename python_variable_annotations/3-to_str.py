@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+    Contains the to_str function
+"""
 
 
 def to_str(n: float) -> str:

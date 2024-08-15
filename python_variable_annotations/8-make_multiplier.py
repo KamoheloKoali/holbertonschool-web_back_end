@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+    Contains the make_multiplier function
+"""
 from collections.abc import Callable
 
 

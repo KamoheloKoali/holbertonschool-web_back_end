@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+    Contains the sum_list function
+"""
 
 
 def sum_list(input_list: list[float]) -> float:

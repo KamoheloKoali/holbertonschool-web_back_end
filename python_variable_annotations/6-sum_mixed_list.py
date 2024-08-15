@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+    Contains the sum_mixed_list function
+"""
+
 
 def sum_mixed_list(mxd_lst: list[float, int]) -> float:
     """
