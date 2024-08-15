@@ -2,10 +2,10 @@
 """
     Contains the element_length function
 """
-from typing import Sequence, List, Tuple, Any
+from typing import Sequence, List, Tuple, Iterable
 
 
-def element_length(lst: Sequence[Any]) -> List[Tuple[Any, int]]:
+def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
     """
         Returns a list of tuples, where each tuple contains an element from the 
         input sequence and the length of that element.
