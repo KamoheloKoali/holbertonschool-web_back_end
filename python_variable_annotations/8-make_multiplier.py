@@ -5,7 +5,7 @@
 from collections.abc import Callable
 
 
-def make_multiplier(multiplier: float) -> callable[[], float]:
+def make_multiplier(multiplier: float) -> Callable[[], float]:
     """
         returns a function that multiplies a float by multiplier
         Args: 
