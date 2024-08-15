@@ -2,9 +2,10 @@
 """
     Contains the sum_mixed_list function
 """
+from typing import List
 
 
-def sum_mixed_list(mxd_lst: list[float, int]) -> float:
+def sum_mixed_list(mxd_lst: List[float, int]) -> float:
     """
         Returns the sum of all the elements in the list.
         Args:
