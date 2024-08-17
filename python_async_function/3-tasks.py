@@ -2,6 +2,9 @@
 
 """
     contains function that utilizes async.Task
+    Imports:
+        asyncio
+        wait_random
 """
 
 import asyncio

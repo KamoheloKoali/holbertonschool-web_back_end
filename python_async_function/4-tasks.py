@@ -2,6 +2,10 @@
 
 """
     similar function to wait_n but calls task_wait random instead
+    Imports:
+        asyncio
+        typing
+        task_wait_random
 """
 
 import asyncio
@@ -14,5 +18,6 @@ async def task_wait_n(n: int, max_delay: int) -> List[float]:
     """
         returns a list of all the delays (float values).
     """
-    delays = await asyncio.gather(*[task_wait_random(max_delay) for _ in range(n)])
+    tasks = [task_wait_random(max_delay) for _ in range(n)]
+    delays = await asyncio.gather(*tasks)
     return delays

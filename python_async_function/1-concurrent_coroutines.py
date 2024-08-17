@@ -2,6 +2,10 @@
 
 """
     contains an async routine function that calls wait_random n times
+    Imports:
+        asyncio
+        typing
+        wait_random
 """
 
 import asyncio
