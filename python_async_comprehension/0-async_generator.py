@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     contains the function async_generator
     that yeilds a random number every second

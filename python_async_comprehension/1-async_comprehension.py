@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
     defines a coroutine that collects and returns 10 random
     numbers using an async
