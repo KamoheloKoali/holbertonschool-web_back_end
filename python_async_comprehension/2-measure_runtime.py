@@ -23,8 +23,8 @@ async def measure_runtime() -> float:
         asyncio.gather and measures and returns the runtime
 
         Returns:
-            runtime (float): the runtime of the program itself
+            the runtime of the program itself
     """
-    start = time.perf_counter()
+    start: float = time.perf_counter()
     await asyncio.gather(comp(), comp(), comp(), comp())
     return time.perf_counter() - start
