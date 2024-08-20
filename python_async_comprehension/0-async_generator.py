@@ -9,11 +9,11 @@
 """
 
 import asyncio
-from typing import AsyncIterator
+from typing import Generator
 import random
 
 
-async def async_generator() -> AsyncIterator[int]:
+async def async_generator() -> Generator[int, None, None]:
     """
         Yields a random number every second
     """

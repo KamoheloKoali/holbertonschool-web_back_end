@@ -14,12 +14,12 @@ from typing import List
 gen = __import__("0-async_generator").async_generator
 
 
-async def async_comprehension() -> List[int]:
+async def async_comprehension() -> List[float]:
     """
         collects and returns 10 random numbers
 
         Returns:
-            numbers (List): a list of integers
+            numbers (List): a list of float numbers
     """
-    numbers: List[int] = [num async for num in gen()]
+    numbers: List[float] = [num async for num in gen()]
     return numbers

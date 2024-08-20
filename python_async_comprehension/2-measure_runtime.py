@@ -7,7 +7,7 @@
     Imports:
         asyncio
         time
-        comprehend
+        comp
 """
 
 import asyncio
@@ -25,6 +25,6 @@ async def measure_runtime() -> float:
         Returns:
             runtime (float): the runtime of the program itself
     """
-    start: float = time.perf_counter()
+    start = time.perf_counter()
     await asyncio.gather(comp(), comp(), comp(), comp())
     return time.perf_counter() - start
