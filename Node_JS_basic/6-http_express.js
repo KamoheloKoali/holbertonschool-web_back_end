@@ -1,21 +1,17 @@
 const express = require('express');
 
+// Créez une application Express
 const app = express();
-const port = 1245;
 
-// Обработчик для корневого маршрута
+// Définissez une route pour l'endpoint /
 app.get('/', (req, res) => {
   res.send('Hello Holberton School!');
 });
 
-// Обработка ошибок 404
-app.use((req, res) => {
-  res.status(404).send('Not Found');
+// Faites écouter le serveur sur le port 1245
+app.listen(1245, () => {
+  console.log('Server is listening on port 1245');
 });
 
-// Запуск сервера
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
+// Exportez l'application Express
 module.exports = app;

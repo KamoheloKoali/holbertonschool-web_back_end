@@ -2,33 +2,37 @@ const fs = require('fs');
 
 function countStudents(path) {
   try {
-    const lines = fs.readFileSync(path, { encoding: 'utf8' }).split(/\r?\n/);
-    let countStudents = 0;
+    // Read the file synchronously
+    const data = fs.readFileSync(path, 'utf8');
+
+    // Split the file content by new lines to get individual rows
+    const rows = data.split('\n').filter((row) => row.trim() !== '');
+
+    // Remove the header row
+    rows.shift();
+
+    // Initialize counters and groups
+    const totalStudents = rows.length;
     const fields = {};
 
-    for (let i = 1; i < lines.length; i += 1) {
-      const line = lines[i].trim();
-      if (line !== '') {
-        countStudents += 1;
-        const [fname, , , field] = line.split(',');
-        if (!fields[field]) {
-          fields[field] = {
-            countField: 1,
-            students: [fname],
-          };
-        } else {
-          fields[field].countField += 1;
-          fields[field].students.push(fname);
-        }
+    // Process each row
+    rows.forEach((row) => {
+      const [firstname, , , field] = row.split(',');
+      if (!fields[field]) {
+        fields[field] = [];
       }
+      fields[field].push(firstname);
+    });
+
+    // Log the total number of students
+    console.log(`Number of students: ${totalStudents}`);
+
+    // Log the number of students in each field and their first names
+    for (const [field, students] of Object.entries(fields)) {
+      console.log(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}`);
     }
-    console.log(`Number of students: ${countStudents}`);
-    for (const field of Object.keys(fields)) {
-      const n = fields[field].countField;
-      const names = fields[field].students.join(', ');
-      console.log(`Number of students in ${field}: ${n}. List: ${names}`);
-    }
-  } catch (err) {
+  } catch (error) {
+    // Handle errors if the file cannot be read
     throw new Error('Cannot load the database');
   }
 }

@@ -1,51 +1,32 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
 function countStudents(path) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path,
-      { encoding: 'utf8', flag: 'r' },
-      (err, data) => {
-        if (err) {
-          reject(Error('Cannot load the database'));
-          return;
+  return fs.readFile(path, 'utf8')
+    .then((data) => {
+      const rows = data.split('\n').filter((row) => row.trim() !== '');
+      rows.shift(); // Remove the header row
+
+      const totalStudents = rows.length;
+      const fields = {};
+
+      rows.forEach((row) => {
+        const [firstname, , , field] = row.split(',');
+        if (!fields[field]) {
+          fields[field] = [];
         }
-        const response = [];
-        let msg;
-
-        const content = data.split('\n');
-
-        let students = content.filter((item) => item);
-
-        students = students.map((item) => item.split(','));
-
-        const studentSize = students.length ? students.length - 1 : 0;
-        msg = `Number of students: ${studentSize}`;
-        console.log(msg);
-
-        response.push(msg);
-
-        const fields = {};
-        for (const i in students) {
-          if (i !== 0) {
-            if (!fields[students[i][3]]) fields[students[i][3]] = [];
-
-            fields[students[i][3]].push(students[i][0]);
-          }
-        }
-
-        delete fields.field;
-
-        for (const key of Object.keys(fields)) {
-          msg = `Number of students in ${key}: ${fields[key].length
-          }. List: ${fields[key].join(', ')}`;
-
-          console.log(msg);
-
-          response.push(msg);
-        }
-        resolve(response);
+        fields[field].push(firstname);
       });
-  });
+
+      let result = `Number of students: ${totalStudents}\n`;
+      for (const [field, students] of Object.entries(fields)) {
+        result += `Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`;
+      }
+
+      return result.trim();
+    })
+    .catch(() => {
+      throw new Error('Cannot load the database');
+    });
 }
 
 module.exports = countStudents;
