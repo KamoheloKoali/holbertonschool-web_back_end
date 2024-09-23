@@ -1,32 +1,50 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 
 function countStudents(path) {
-  return fs.readFile(path, 'utf8')
-    .then((data) => {
-      const rows = data.split('\n').filter((row) => row.trim() !== '');
-      rows.shift(); // Remove the header row
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, data) => {
+      if (err) {
+        reject(Error('Cannot load the database'));
+        return;
+      }
+      const response = [];
+      let msg;
 
-      const totalStudents = rows.length;
+      const content = data.toString().split('\n');
+
+      let students = content.filter((item) => item);
+
+      students = students.map((item) => item.split(','));
+
+      const NUMBER_OF_STUDENTS = students.length ? students.length - 1 : 0;
+      msg = `Number of students: ${NUMBER_OF_STUDENTS}`;
+      console.log(msg);
+
+      response.push(msg);
+
       const fields = {};
+      for (const i in students) {
+        if (i !== 0) {
+          if (!fields[students[i][3]]) fields[students[i][3]] = [];
 
-      rows.forEach((row) => {
-        const [firstname, , , field] = row.split(',');
-        if (!fields[field]) {
-          fields[field] = [];
+          fields[students[i][3]].push(students[i][0]);
         }
-        fields[field].push(firstname);
-      });
-
-      let result = `Number of students: ${totalStudents}\n`;
-      for (const [field, students] of Object.entries(fields)) {
-        result += `Number of students in ${field}: ${students.length}. List: ${students.join(', ')}\n`;
       }
 
-      return result.trim();
-    })
-    .catch(() => {
-      throw new Error('Cannot load the database');
+      delete fields.field;
+
+      for (const key of Object.keys(fields)) {
+        msg = `Number of students in ${key}: ${
+          fields[key].length
+        }. List: ${fields[key].join(', ')}`;
+
+        console.log(msg);
+
+        response.push(msg);
+      }
+      resolve(response);
     });
+  });
 }
 
 module.exports = countStudents;
